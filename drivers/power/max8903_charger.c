@@ -32,7 +32,7 @@
 //#define SUPPORT_USB_STATE
 #define FULL_VCELL 4250000
 #define FULL_SOC 100
-#define EMPTY_VOLT 2990000
+#define EMPTY_VOLT 3100000
 #define LOW_SOC -1
 #define WORK_DELAY 1000
 
