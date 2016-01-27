@@ -32,8 +32,8 @@
 //#define SUPPORT_USB_STATE
 #define FULL_VCELL 4250000
 #define FULL_SOC 100
-#define EMPTY_VOLT 3100000
-#define LOW_SOC -1
+#define EMPTY_VOLT 3270000
+#define LOW_SOC 0
 #define WORK_DELAY 1000
 
 #ifdef CONFIG_BATTERY_MAX17040
@@ -218,6 +218,9 @@ static int battery_get_property(struct power_supply *battery,
                         if (fg_read_vcell() >= EMPTY_VOLT) {
                                 val->intval = val->intval + 1;
                         }
+                        if (fg_read_vcell() <= EMPTY_VOLT) {
+                                val->intval = 0;
+                        }        
 			break;
 #ifdef BATTERY_DEBUG
 			if (g_force_soc_use) {
