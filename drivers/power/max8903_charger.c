@@ -30,9 +30,9 @@
 #include <plat/gpio-cfg.h>
 
 //#define SUPPORT_USB_STATE
-#define FULL_VCELL 4290000
+#define FULL_VCELL 4250000
 #define FULL_SOC 100
-#define EMPTY_VOLT 3300000
+#define EMPTY_VOLT 2990000
 #define LOW_SOC -1
 #define WORK_DELAY 1000
 
@@ -214,11 +214,8 @@ static int battery_get_property(struct power_supply *battery,
                         val->intval = 5;
 		        break;      
 		case POWER_SUPPLY_PROP_CAPACITY:
-			val->intval = fg_read_soc(); // mehmet_VE %1 battery hack
-			if (val->intval >= FULL_SOC) {
-				val->intval = 100;
-                        }                             
-                        if (val->intval >= EMPTY_VOLT) {
+			val->intval = fg_read_soc(); // mehmet_VE %1 battery hack                           
+                        if (fg_read_vcell() >= EMPTY_VOLT) {
                                 val->intval = val->intval + 1;
                         }
 			break;
