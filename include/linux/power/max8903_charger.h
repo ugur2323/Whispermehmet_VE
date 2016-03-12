@@ -23,9 +23,9 @@
 #ifndef __MAX8903_CHARGER_H__
 #define __MAX8903_CHARGER_H__
 
-#define CHARGER_BATTERY_NAME "charger-battery"
-#define CHARGER_USB_NAME "charger-usb"
-#define CHARGER_ADAPTER_NAME "charger-adapter"
+#define CHARGER_BATTERY_NAME "battery"
+#define CHARGER_USB_NAME "usb"
+#define CHARGER_ADAPTER_NAME "adapter"
 
 struct max8903_pdata {
 	/*
