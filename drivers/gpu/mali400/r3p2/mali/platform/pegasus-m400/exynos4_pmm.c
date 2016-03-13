@@ -89,7 +89,7 @@ mali_dvfs_table mali_dvfs[MALI_DVFS_STEPS]={
 			/* step 0 */{160  ,1000000	,875000	, 0   , 70},
 			/* step 1 */{266  ,1000000	,900000	,62   , 90},
 			/* step 2 */{350  ,1000000	,950000	,85   , 90},
-			/* step 3 */{440  ,1000000	,1025000   ,85   , 90},
+			/* step 3 */{440  ,1000000	,1035000   ,85   , 90},
 			/* step 4 */{533  ,1000000	,1075000   ,95   ,100} };
 #else
 			/* step 0 */{134  ,1000000	, 950000   ,85   , 90},
@@ -121,7 +121,7 @@ static unsigned int asv_3d_volt_9_table[MALI_DVFS_STEPS-1][ASV_LEVEL] = {
 #if (MALI_DVFS_STEPS > 2)
 	{ 1050000, 1025000, 1000000, 1000000,  975000,  950000,  950000,  950000,  925000,  925000,  925000,  900000},  /* L1(350Mhz) */
 #if (MALI_DVFS_STEPS > 3)
-	{ 1100000, 1075000, 1050000, 1050000, 1050000, 1025000, 1025000, 1000000, 1000000, 1000000,  975000,  950000},  /* L0(440Mhz) */
+	{ 1110000, 1085000, 1060000, 1060000, 1060000, 1035000, 1035000, 1030000, 1020000, 1010000,  985000,  940000},  /* L0(440Mhz) */
 #endif
 #endif
 #endif
@@ -182,12 +182,12 @@ static struct clk *mali_clock		= NULL;
 #if defined(CONFIG_CPU_EXYNOS4412) || defined(CONFIG_CPU_EXYNOS4212)
 /* Pegasus */
 static const mali_bool bis_vpll = MALI_TRUE;
-int mali_gpu_clk = 470;
+int mali_gpu_clk = 440;
 int mali_gpu_vol = 1040000;
 #else
 /* Orion */
 static const mali_bool bis_vpll = MALI_FALSE;
-int mali_gpu_clk = 277;
+int mali_gpu_clk = 266;
 int mali_gpu_vol = 1060000;
 #endif
 

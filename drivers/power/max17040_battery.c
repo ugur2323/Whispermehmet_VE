@@ -28,12 +28,15 @@
 #define MAX17040_SOC_LSB	0x05
 #define MAX17040_MODE_MSB	0x06
 #define MAX17040_MODE_LSB	0x07
+#define MAX17040_REG_ADDR_MODE	0x06
 #define MAX17040_VER_MSB	0x08
 #define MAX17040_VER_LSB	0x09
 #define MAX17040_RCOMP_MSB	0x0C
 #define MAX17040_RCOMP_LSB	0x0D
 #define MAX17040_CMD_MSB	0xFE
 #define MAX17040_CMD_LSB	0xFF
+#define MAX17040_REG_ADDR_CMD	0xFE
+#define MAX17040_REG_SIZE 2
 #define EMPTY_VOLT 3300000
 #define MAX17040_BATTERY_FULL	95
 
@@ -171,6 +174,9 @@ int fg_read_vcell(void)
 	return ((msb << 4) + (lsb >> 4)) * 1250;
 }
 
+
+
+
 int fg_read_soc(void)
 {
 	struct i2c_client *client = fg_i2c_client;
@@ -193,11 +199,11 @@ int fg_get_version(void)
 {
 	u8 msb;
 	u8 lsb;
+        u8 new_rcomp[MAX17040_REG_SIZE];
         struct i2c_client *client = fg_i2c_client;
 	msb = max17040_read_reg(client, MAX17040_VER_MSB);
 	lsb = max17040_read_reg(client, MAX17040_VER_LSB);
         printk("MAX17040 WhisperMods");
-        max17040_write_reg(client,MAX17040_RCOMP_MSB,2700);
         printk("MAX17040 Fuel-Gauge Ver %d%d\n", msb, lsb);
         return 5; 
 }
@@ -208,14 +214,22 @@ int fg_get_rcomp(void)
         struct i2c_client *client = fg_i2c_client;
 	msb = max17040_read_reg(client, MAX17040_RCOMP_MSB);
 	lsb = max17040_read_reg(client, MAX17040_RCOMP_LSB);
-        max17040_write_reg(client,MAX17040_RCOMP_MSB,2700);
         printk("MAX17040 Fuel-Gauge RCOMP %d%d\n", msb, lsb);
         return 5; 
+}
+int fg_por(void)
+{
+	u8 por[MAX17040_REG_SIZE] = { 0x54, 0x00 }; /* POR command */
+	s32 rc;
+        struct i2c_client *client = fg_i2c_client;
+	rc = i2c_smbus_write_i2c_block_data(client,MAX17040_REG_ADDR_CMD,MAX17040_REG_SIZE,por);
+        msleep(500);
+        printk("MAX17040 Reset! \n");
+	return rc;
 }
 #else
 static void max17040_update_values(struct max17040_chip *chip)
 {
-        i2c_smbus_write_word_data(data->clientp, MAX17040_RCOMP_MSB,swab16(chip->pdata->9300));
 	max17040_get_vcell(chip->client);
 	max17040_get_soc(chip->client);
 	max17040_get_online(chip->client);

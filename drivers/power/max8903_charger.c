@@ -50,6 +50,7 @@ extern int fg_read_soc(void);
 extern int fg_read_vcell(void);
 extern int fg_get_version(void);
 extern int fg_get_rcomp(void);
+extern int fg_por(void);
 #endif
 
 #ifdef CONFIG_TOUCHSCREEN_ATMEL_MXT1664S
@@ -212,12 +213,15 @@ static int battery_get_property(struct power_supply *battery,
 			val->intval = fg_read_vcell();
 			break;
                     
-                case POWER_SUPPLY_PROP_TEMP:      
-                        val->intval = fg_get_version();
+                case POWER_SUPPLY_PROP_TEMP:     
                         val->intval = fg_get_rcomp();
+                        val->intval = fg_get_version();
+                        val->intval = fg_por(); //power on request
+                      //  val->intval = fg_get_rcomp();
 		        break;      
 		case POWER_SUPPLY_PROP_CAPACITY:
-			val->intval = fg_read_soc(); // mehmet_VE %1 battery hack                           
+			val->intval = fg_read_soc(); // mehmet_VE %1 battery hack           
+                        msleep(500);
                         if (fg_read_vcell() >= EMPTY_VOLT) {
                                 val->intval = val->intval + 1;
                         }
