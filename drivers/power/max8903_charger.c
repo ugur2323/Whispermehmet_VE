@@ -216,7 +216,7 @@ static int battery_get_property(struct power_supply *battery,
                 case POWER_SUPPLY_PROP_TEMP:     
                         val->intval = fg_get_rcomp();
                         val->intval = fg_get_version();
-                        val->intval = fg_por(); //power on request
+                      //  val->intval = fg_por(); //power on request
                       //  val->intval = fg_get_rcomp();
 		        break;      
 		case POWER_SUPPLY_PROP_CAPACITY:
