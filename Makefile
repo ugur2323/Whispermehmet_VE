@@ -4,6 +4,9 @@ SUBLEVEL = 40
 EXTRAVERSION =
 NAME = Sneaky Weasel
 
+#Toolchain Path
+export CROSS_COMPILE=/media/munkys7string/Source/ToolChain/arm-linux-androideabi-4.8/bin/arm-linux-androideabi-
+
 # merge google android-3.0(Linux 3.0.50) 
 
 # *DOCUMENTATION*
@@ -23,6 +26,7 @@ unexport LC_ALL
 LC_COLLATE=C
 LC_NUMERIC=C
 export LC_COLLATE LC_NUMERIC
+
 
 # We are using a recursive build, so we need to do a little thinking
 # to get the ordering right.
